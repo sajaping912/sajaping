@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>모바일 갤러그</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 상단 메뉴 바 추가 -->
+    <div id="top-menu">
+        <button id="menu-start">START</button>
+        <button id="menu-pause">PAUSE</button>
+        <button id="menu-stop">STOP</button>
+        <div id="timer-display">60</div>
+    </div>
+    
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="start-screen">
+            <h1>모바일 갤러그</h1>
+            <button id="start-button" ontouchstart="void(0)">게임 시작</button>
+        </div>
+        <div id="game-over-screen" class="hidden">
+            <h2>게임 오버</h2>
+            <p>점수: <span id="final-score">0</span></p>
+            <button id="restart-button" ontouchstart="void(0)">다시 시작</button>
+        </div>
+        <!-- 점수 표시 요소 숨김 처리 -->
+        <div id="score-display" class="hidden">점수: <span id="score">0</span></div>
+    </div>
+    <script>
+        // 모바일 전용 설정
+        document.addEventListener('touchmove', function(e) { e.preventDefault(); }, { passive: false });
+        
+        // 버튼에 대한 터치 핸들러 강화
+        window.addEventListener('load', function() {
+            const allButtons = document.querySelectorAll('button');
+            allButtons.forEach(function(button) {
+                button.addEventListener('touchstart', function(e) {
+                    console.log('터치 감지: ' + button.id);
+                }, {passive: false});
+            });
+        });
+    </script>
+    <script src="game.js"></script>
+</body>
+</html>
