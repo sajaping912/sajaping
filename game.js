@@ -21,7 +21,7 @@ const gameSettings = {
     canvasWidth: 0,
     canvasHeight: 0,
     playerSpeed: 5,
-    bulletSpeed: 10,
+    bulletSpeed: 3,  // 10에서 3으로 변경 (70% 감소)
     enemySpeed: 2,
     enemySpawnInterval: 2000, // 2초마다 적 생성
     enemyShootInterval: 1500, // 1.5초마다 적이 총알 발사

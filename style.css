@@ -34,11 +34,11 @@ body::before {
     height: 50px; /* 메뉴바 높이 조정 */
     background-color: #333;
     display: flex;
-    justify-content: flex-start; /* 왼쪽 정렬로 변경 */
+    justify-content: center; /* 중앙 정렬 유지 */
     align-items: center; 
     z-index: 1001;
-    padding-left: calc(50% - 112px - 10px); /* 이전 -7px에서 -10px로 3px 감소 */
-    padding-top: 6px; /* 메뉴 아이콘들을 y축으로 6px 아래로 이동 (기존 4px에서 2px 더 증가) */
+    padding-top: 6px; /* 메뉴 아이콘들을 y축으로 6px 아래로 이동 */
+    padding-left: 43px; /* x축 우측으로 총 43px 이동 (기존 40px + 추가 3px) */
 }
 
 /* 메뉴 버튼 기본 스타일 */
@@ -50,12 +50,12 @@ body::before {
     font-weight: bold;
     padding: 1px 0 0 0;
     margin: 0 13px;
-    height: 36px; /* 기존 28px에서 30% 증가 */
+    height: 36px; /* 세로폭 유지 */
     line-height: 21px;
-    width: 110px; /* 기존 104px에서 6px 증가 */
+    width: auto; /* 자동 너비로 설정해서 글자 크기에 맞춤 */
     text-align: center;
     box-shadow: none;
-    border-radius: 7px; /* 모서리 반경도 약간 증가 */
+    border-radius: 7px;
     text-transform: uppercase;
     letter-spacing: 0;
     display: flex;
@@ -68,18 +68,21 @@ body::before {
     background-color: #00aa00 !important; /* 녹색 */
     color: white !important;
     border-radius: 7px !important; /* 모서리 반경 7px로 변경 */
+    padding: 0 14px !important; /* 좌우 패딩 추가로 배경색만 가로로 늘림 */
 }
 
 #top-menu #menu-pause {
     background-color: #ffcc00 !important; /* 노란색 */
     color: black !important;
     border-radius: 7px !important; /* 모서리 반경 7px로 변경 */
+    padding: 0 14px !important; /* 좌우 패딩 추가로 배경색만 가로로 늘림 */
 }
 
 #top-menu #menu-stop {
     background-color: #ff0000 !important; /* 빨간색 */
     color: white !important;
     border-radius: 7px !important; /* 모서리 반경 7px로 변경 */
+    padding: 0 14px !important; /* 좌우 패딩 추가로 배경색만 가로로 늘림 */
 }
 
 #top-menu button:active {
@@ -91,7 +94,7 @@ body::before {
     color: white;
     font-size: 17.6px;
     font-weight: bold;
-    margin-left: 50px;  /* 10px에서 50px로 변경하여 40px 더 오른쪽으로 이동 */
+    margin-left: 15px;  /* 간격 조정 */
     background-color: #333;
     padding: 1px 10px;
     border-radius: 5px;
