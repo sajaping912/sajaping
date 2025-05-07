@@ -143,7 +143,8 @@ function resizeCanvas() {
 // 캔버스 터치 이벤트 설정
 function setupCanvasTouchHandler() {
     canvas.addEventListener('touchstart', function(e) {
-        if (!gameState.started || gameState.over) return;
+        // 일시정지 상태일 때는 터치에 반응하지 않도록 조건 추가
+        if (!gameState.started || gameState.over || gameState.paused) return;
         
         e.preventDefault();
         const touch = e.touches[0];
@@ -156,9 +157,8 @@ function setupCanvasTouchHandler() {
         console.log('캔버스 터치 감지:', touchX, touchY);
         
         // 플레이어를 터치 지점 위에 위치시키기
-        // x축 왼쪽으로 추가 3px 더 이동 (총 11px)
-        player.x = touchX - player.width / 2 - 11; // 왼쪽으로 총 11px 이동
-        player.y = touchY - player.height - 10 - 8; // 위쪽으로 총 18px 이동
+        player.x = touchX - player.width / 2 - 11;
+        player.y = touchY - player.height - 10 - 8;
         
         // 화면 경계 체크
         if (player.x < 0) player.x = 0;
@@ -177,7 +177,8 @@ function setupCanvasTouchHandler() {
     
     // PC 사용자를 위한 클릭 이벤트도 추가
     canvas.addEventListener('click', function(e) {
-        if (!gameState.started || gameState.over) return;
+        // 일시정지 상태일 때는 클릭에 반응하지 않도록 조건 추가
+        if (!gameState.started || gameState.over || gameState.paused) return;
         
         const rect = canvas.getBoundingClientRect();
         const clickX = e.clientX - rect.left;
@@ -186,9 +187,8 @@ function setupCanvasTouchHandler() {
         console.log('캔버스 클릭 감지:', clickX, clickY);
         
         // 플레이어를 클릭 지점 위에 위치시키기
-        // x축 왼쪽으로 추가 3px 더 이동 (총 11px)
-        player.x = clickX - player.width / 2 - 11; // 왼쪽으로 총 11px 이동
-        player.y = clickY - player.height - 10 - 8; // 위쪽으로 총 18px 이동
+        player.x = clickX - player.width / 2 - 11;
+        player.y = clickY - player.height - 10 - 8;
         
         // 화면 경계 체크
         if (player.x < 0) player.x = 0;
@@ -276,7 +276,8 @@ function restartGame() {
 
 // 총알 발사
 function shootBullet() {
-    if (!gameState.started || gameState.over) return;
+    // 게임이 일시정지 상태면 총알 발사하지 않음
+    if (!gameState.started || gameState.over || gameState.paused) return;
     
     const bulletWidth = 5;
     const bulletHeight = 15;
