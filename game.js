@@ -27,7 +27,9 @@ const gameSettings = {
     enemyShootInterval: 1500, // 1.5초마다 적이 총알 발사
     touchActive: false,
     touchDirection: 0, // -1: 왼쪽, 0: 정지, 1: 오른쪽
-    isShooting: false
+    isShooting: false,
+    // 총알 색상 배열 추가
+    bulletColors: ['#fff', '#ff0', '#f0f', '#0ff', '#0f0', '#f00', '#00f', '#fa0', '#a0f', '#0af']
 };
 
 // 게임 오브젝트
@@ -287,7 +289,9 @@ function shootBullet() {
         y: player.y - bulletHeight,
         width: bulletWidth,
         height: bulletHeight,
-        speed: gameSettings.bulletSpeed
+        speed: gameSettings.bulletSpeed,
+        // 랜덤 색상 추가
+        color: gameSettings.bulletColors[Math.floor(Math.random() * gameSettings.bulletColors.length)]
     };
     
     gameState.playerBullets.push(bullet);
@@ -308,15 +312,15 @@ function spawnEnemy() {
     // 다양한 적 타입 설정 (첨부한 이미지 활용)
     const enemyTypes = [
         { image: 'enemy1.png', width: 50, height: 50, points: 10, speed: 1.5 },   // 우주선
-        { image: 'enemy2.png', width: 50, height: 50, points: 20, speed: 2 },     // 또 다른 우주선
-        { image: 'enemy3.png', width: 40, height: 40, points: 30, speed: 2.5 },   // 또 다른 우주선
-        { image: 'enemy4.png', width: 55, height: 35, points: 40, speed: 3 },     // 잠자리
-        { image: 'enemy5.png', width: 50, height: 50, points: 50, speed: 1.8 },   // 벌
-        { image: 'enemy6.png', width: 40, height: 40, points: 60, speed: 2.2 },   // 나뭇잎
-        { image: 'enemy7.png', width: 55, height: 35, points: 70, speed: 4 },     // 물고기
-        { image: 'enemy8.png', width: 60, height: 25, points: 80, speed: 3.5 },   // 독수리
+        { image: 'enemy2.png', width: 50, height: 50, points: 20, speed: 1.5 },   // 또 다른 우주선
+        { image: 'enemy3.png', width: 40, height: 40, points: 30, speed: 1.5 },   // 또 다른 우주선
+        { image: 'enemy4.png', width: 55, height: 35, points: 40, speed: 1.5 },   // 잠자리
+        { image: 'enemy5.png', width: 50, height: 50, points: 50, speed: 1.5 },   // 벌
+        { image: 'enemy6.png', width: 40, height: 40, points: 60, speed: 1.5 },   // 나뭇잎
+        { image: 'enemy7.png', width: 55, height: 35, points: 70, speed: 1.5 },   // 물고기
+        { image: 'enemy8.png', width: 60, height: 25, points: 80, speed: 1.5 },   // 독수리
         { image: 'enemy9.png', width: 60, height: 30, points: 90, speed: 1.5 },   // 또 다른 독수리
-        { image: 'enemy10.png', width: 40, height: 70, points: 100, speed: 2 }    // 로켓
+        { image: 'enemy10.png', width: 40, height: 70, points: 100, speed: 1.5 }  // 로켓
     ];
     
     // 랜덤으로 적 타입 선택
@@ -357,7 +361,7 @@ function enemyShoot() {
         y: shootingEnemy.y + shootingEnemy.height,
         width: 4,
         height: 10,
-        speed: gameSettings.bulletSpeed / 2
+        speed: gameSettings.bulletSpeed * 1.05  // 총알 속도를 30% 줄임 (1.5에서 1.05로)
     };
     
     gameState.enemyBullets.push(bullet);
@@ -429,6 +433,7 @@ function update(deltaTime) {
     
     // 적 총알 이동
     gameState.enemyBullets.forEach((bullet, index) => {
+        // 부호를 양수로 변경하여 아래로 내려가게 수정
         bullet.y += bullet.speed;
         
         // 화면 밖으로 나간 총알 제거
@@ -514,8 +519,8 @@ function render() {
     });
     
     // 플레이어 총알 그리기
-    ctx.fillStyle = '#fff';
     gameState.playerBullets.forEach(bullet => {
+        ctx.fillStyle = bullet.color; // 총알 색상 적용
         ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
     });
     
@@ -536,9 +541,6 @@ function render() {
 function endGame() {
     gameState.over = true;
     bgMusic.pause();
-    
-    finalScoreDisplay.textContent = gameState.score;
-    gameOverScreen.classList.remove('hidden');
 }
 
 // 메인 게임 루프

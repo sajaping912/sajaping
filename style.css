@@ -39,6 +39,14 @@ body::before {
     z-index: 1001;
     padding-top: 6px; /* 메뉴 아이콘들을 y축으로 6px 아래로 이동 */
     padding-left: 43px; /* x축 우측으로 총 43px 이동 (기존 40px + 추가 3px) */
+    /* 위치 고정을 위한 속성 수정 */
+    transform: none !important;
+    -webkit-transform: none !important;
+    /* will-change 제거 */
+    will-change: unset;
+    /* 추가 고정 속성 */
+    position: fixed !important;
+    transition: none !important;
 }
 
 /* 메뉴 버튼 기본 스타일 */
@@ -46,13 +54,13 @@ body::before {
     background-color: transparent;
     color: #fff;
     border: none;
-    font-size: 17.6px; /* 글자 크기 그대로 유지 */
+    font-size: 17.6px;
     font-weight: bold;
     padding: 1px 0 0 0;
     margin: 0 13px;
-    height: 36px; /* 세로폭 유지 */
+    height: 36px;
     line-height: 21px;
-    width: auto; /* 자동 너비로 설정해서 글자 크기에 맞춤 */
+    width: auto;
     text-align: center;
     box-shadow: none;
     border-radius: 7px;
@@ -61,6 +69,13 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
+    /* 움직임 방지를 위한 속성 수정 */
+    transition: none !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+    position: relative;
+    /* will-change 제거 */
+    will-change: unset;
 }
 
 /* 메뉴 버튼 개별 스타일 - !important 추가하여 우선순위 높임 */
@@ -87,6 +102,9 @@ body::before {
 
 #top-menu button:active {
     opacity: 0.8;
+    /* 눌림 효과로 인한 위치 변화 제거 */
+    transform: none !important;
+    -webkit-transform: none !important;
 }
 
 /* 타이머 디스플레이 스타일 */
@@ -94,7 +112,7 @@ body::before {
     color: white;
     font-size: 17.6px;
     font-weight: bold;
-    margin-left: 15px;  /* 간격 조정 */
+    margin-left: 15px;
     background-color: #333;
     padding: 1px 10px;
     border-radius: 5px;
@@ -103,6 +121,11 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
+    /* 위치 고정을 위한 속성 추가 */
+    transform: none !important;
+    -webkit-transform: none !important;
+    transition: none !important;
+    will-change: unset;
 }
 
 #game-container {
@@ -138,20 +161,94 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: transparent; /* rgba(0, 0, 0, 0.8)에서 투명으로 변경 */
     color: white;
     z-index: 10;
 }
 
-h1, h2 {
+/* h1 태그 숨김 처리 */
+h1 {
+    display: none;
+}
+
+h2 {
     color: #ff0;
     margin-bottom: 30px;
     text-align: center;
     font-size: 2rem;
 }
 
-/* 기존 코드에서 다른 버튼 스타일에 영향을 주지 않도록 조정 */
-#start-button, #restart-button {
+/* 시작 버튼 스타일 수정 */
+#start-button {
+    background-color: transparent; /* 배경색을 투명하게 유지 */
+    color: #000;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 86.4px;  /* 72px에서 20% 증가하여 86.4px로 변경 */
+    height: 86.4px; /* 72px에서 20% 증가하여 86.4px로 변경 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    outline: none;
+    box-shadow: none;
+    /* 움직임 방지를 위해 transition 속성 제거 */
+    will-change: auto;
+    /* 버튼을 위로 50px 올림 */
+    transform: translateY(-50px) !important;
+    -webkit-transform: translateY(-50px) !important;
+    transition: none !important;
+    position: relative;
+    z-index: 2;
+    /* 배경 이미지를 removebg.png로 설정 */
+    background-image: url('images/removebg.png');
+    background-size: contain; /* 이미지가 잘리지 않게 설정 */
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: visible;
+}
+
+/* 물방울 효과를 위한 가상 요소 제거 (실제 이미지로 대체) */
+#start-button::before {
+    content: none; /* 기존 가상 요소 제거 */
+}
+
+/* 물방울 효과에 반사광 제거 (실제 이미지로 대체) */
+#start-button::after {
+    content: none; /* 기존 반사광 효과 제거 */
+}
+
+/* 플레이 아이콘 스타일 - 중앙 정렬 조정 */
+.play-icon {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 12.6px 21px 12.6px;  /* 30% 줄임: 18px -> 12.6px, 30px -> 21px */
+    border-color: transparent transparent #00aa00 transparent;
+    position: absolute; /* relative에서 absolute로 변경 */
+    top: 50%; /* 물방울의 세로 중앙에 위치 */
+    left: 50%; /* 물방울의 가로 중앙에 위치 */
+    transform: translate(calc(-50% - 2px), calc(-50% + 4px)); /* x축 우측으로 2px 이동, y축 아래로 4px 이동 */
+    z-index: 3; /* 물방울 이미지 위에 표시 */
+}
+
+#start-button:hover .play-icon {
+    border-color: transparent transparent #00cc00 transparent; /* 호버 시 밝은 녹색으로 변경 */
+}
+
+#start-button:active .play-icon {
+    border-color: transparent transparent #00cc00 transparent; /* 활성화 시에도 밝은 녹색으로 변경 */
+    /* 버튼 눌림 효과로 인한 위치 변화 방지 */
+    transform: none !important;
+    -webkit-transform: none !important;
+}
+
+/* 재시작 버튼 스타일은 그대로 유지 */
+#restart-button {
     background-color: #ff0;
     color: #000;
     border: none;
@@ -168,11 +265,11 @@ h1, h2 {
     transition: transform 0.1s, background-color 0.3s;
 }
 
-#start-button:hover, #restart-button:hover {
+#restart-button:hover {
     background-color: #ff6;
 }
 
-#start-button:active, #restart-button:active {
+#restart-button:active {
     transform: scale(0.95);
     background-color: #ff6;
 }

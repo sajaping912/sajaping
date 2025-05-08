@@ -20,8 +20,10 @@
     <div id="game-container">
         <canvas id="gameCanvas"></canvas>
         <div id="start-screen">
-            <h1>모바일 갤러그</h1>
-            <button id="start-button" ontouchstart="void(0)">게임 시작</button>
+            <!-- 텍스트 제거하고 플레이 아이콘으로 대체 -->
+            <button id="start-button" ontouchstart="void(0)">
+                <div class="play-icon"></div>
+            </button>
         </div>
         <div id="game-over-screen" class="hidden">
             <h2>게임 오버</h2>
